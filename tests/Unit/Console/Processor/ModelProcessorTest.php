@@ -36,7 +36,7 @@ class ModelProcessorTest extends \PHPUnit_Framework_TestCase
                     false,
                 ],
                 ['Enter your property name such as isFinished, orderNumber', [], false],
-                ['Provide your Model Class', [], false],
+                ['Provide your class name', [], false],
                 ['Enter your property name such as isFinished, orderNumber', [], false]
             )
             ->willReturnOnConsecutiveCalls(
@@ -59,6 +59,6 @@ class ModelProcessorTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->willReturnOnConsecutiveCalls('class', 'string');
-        $result = $processor->request($this->command);
+        $processor->request($this->command);
     }
 }
