@@ -1,9 +1,9 @@
 <?php
-namespace Tests\Unit\Console\Processor;
+namespace Tests\Weburnit\Unit\Console\Processor;
 
 use Illuminate\Console\Command;
-use Weburnit\Console\Commands\Processor\ModelProcessor;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
+use Weburnit\Console\Commands\Processor\ValueObjectProcessor;
 
 /**
  * Created by PhpStorm.
@@ -27,33 +27,38 @@ class ModelProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-        $processor = new ModelProcessor();
+        $processor = new ValueObjectProcessor();
         $this->command->method('anticipate')
             ->withConsecutive(
                 [
-                    'Provide your model Model Class',
+                    'Provide your Model Class',
                     [],
                     false,
                 ],
-                [sprintf('%d. Enter your property name such as isFinished, orderNumber', 1), [], false],
-                [sprintf('%d. Enter your property name such as isFinished, orderNumber', 2), [], false],
-                ['Exp: 10,20', [], false]
+                ['Enter your property name such as isFinished, orderNumber', [], false],
+                ['Provide your Model Class', [], false],
+                ['Enter your property name such as isFinished, orderNumber', [], false]
             )
-            ->willReturnOnConsecutiveCalls('ModelObject', 'orderNumber', 'sourceType', '10,20');
+            ->willReturnOnConsecutiveCalls(
+                'ModelObject',
+                'order',
+                'Order',
+                'orderNumber'
+            );
         $this->command->method('choice')
             ->withConsecutive(
                 [
-                    'provide type for this property: number, string...',
+                    'provide type for this property: number, string, etc. Default is string.',
                     ValidationFactory::getValidationOptions(),
                     false,
                 ],
                 [
-                    'provide type for this property: number, string...',
+                    'provide type for this property: number, string, etc. Default is string.',
                     ValidationFactory::getValidationOptions(),
                     false,
                 ]
             )
-            ->willReturnOnConsecutiveCalls('numeric', 'between');
+            ->willReturnOnConsecutiveCalls('class', 'string');
         $result = $processor->request($this->command);
     }
 }

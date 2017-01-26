@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands\Parser;
 
-use Weburnit\Console\Commands\Parser\Template\Util;
-use Weburnit\Console\Commands\Processor\ModelProcessor;
+use gossi\codegen\model\PhpClass;
+use gossi\codegen\model\PhpProperty;
+use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
 
 /**
  * Class ValidationParser
@@ -13,33 +14,21 @@ use Weburnit\Console\Commands\Processor\ModelProcessor;
 class ValidationParser implements ParserInterface
 {
     /**
-     * @var string
+     * {@inheritdoc}
      */
-    private $template;
-
-    /**
-     * FieldParser constructor.
-     */
-    public function __construct()
-    {
-        $this->template = Util::getTemplate(Util::TEMPLATE_VALIDATION);
-    }
-
-    /**
-     * @param ModelProcessor $processor
-     *
-     * @return string
-     */
-    public function parse(ModelProcessor $processor): string
+    public function parse(ModelProcessorInterface $processor, PhpClass $class)
     {
         $validations = [];
         foreach ($processor->getProperties() as $processorResult) {
-            $template      = $this->template;
-            $template      = Util::update($template, 'field', $processorResult->getKey());
-            $template      = Util::update($template, 'validation', (string) $processorResult);
+            $template      = sprintf('\'%s\'=>\'%s\',', $processorResult->getInput(), (string) $processorResult);
             $validations[] = $template;
         }
 
-        return implode('', $validations);
+        $class->setProperty(
+            PhpProperty::create('validation')->setVisibility('public')
+                ->setStatic(true)
+                ->setType('array')
+                ->setExpression(sprintf('[%s]', implode('', $validations)))
+        );
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
  * Class ModelProcessor
  * @package Weburnit\Console\Commands\Processor
  */
-class ModelProcessor extends AbstractProcessor
+class ValueObjectProcessor extends AbstractProcessor implements ModelProcessorInterface
 {
     /**
      * @var string
@@ -27,6 +27,11 @@ class ModelProcessor extends AbstractProcessor
     private $namespace;
 
     /**
+     * @var string
+     */
+    private $question;
+
+    /**
      * @var ProcessorResult[]
      */
     private $properties = [];
@@ -34,34 +39,44 @@ class ModelProcessor extends AbstractProcessor
     public static $propertyIndex = 1;
 
     /**
+     * ValueObjectProcessor constructor.
+     *
+     * @param string $question
+     */
+    public function __construct(string $question = null)
+    {
+        $this->question = $question ?? 'Provide your Model Class';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function request(Command $command)
     {
-        $property = parent::request($command);
+        if (!$this->description && !$this->modelClass) {
+            $property = parent::request($command);
 
-        $description = $command->ask(
-            sprintf('%s description', 'Class'),
-            ''
-        );
-        $property->setDescription($description);
+            $description = $command->ask(
+                sprintf('%s description', 'Class'),
+                ''
+            );
 
-        $this->description = $property->getDescription();
+            $this->description = $description;
 
-        $this->modelClass = $property->getKey();
+            $this->modelClass = $property->getInput();
+        }
+        $command->info(sprintf('Adding properties for class %s(%s)', $this->modelClass, $this->description));
 
         while ($property = $this->addNewProperty($command)) {
-            $this->properties[$property->getKey()] = $property;
+            $this->properties[$property->getInput()] = $property;
             static::$propertyIndex++;
         }
-
-        return $this;
     }
 
     /**
      * @return ProcessorResult[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -75,7 +90,7 @@ class ModelProcessor extends AbstractProcessor
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getModelClass(): string
     {
@@ -83,7 +98,7 @@ class ModelProcessor extends AbstractProcessor
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription(): string
     {
@@ -91,11 +106,19 @@ class ModelProcessor extends AbstractProcessor
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getNamespace(): string
     {
         return $this->namespace;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -104,6 +127,14 @@ class ModelProcessor extends AbstractProcessor
     public function setNamespace(string $namespace)
     {
         $this->namespace = $namespace;
+    }
+
+    /**
+     * @param string $modelClass
+     */
+    public function setModelClass(string $modelClass)
+    {
+        $this->modelClass = $modelClass;
     }
 
     /**
@@ -125,10 +156,9 @@ class ModelProcessor extends AbstractProcessor
     /**
      * {@inheritdoc}
      */
-    protected function processKey($key): bool
+    protected function processInputValue($key): bool
     {
         if (!$key) {
-            $this->error('You must provide proper namespace');
             $this->request();
         }
 
@@ -140,7 +170,7 @@ class ModelProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
-        return 'Provide your model Model Class';
+        return $this->question;
     }
 
     /**

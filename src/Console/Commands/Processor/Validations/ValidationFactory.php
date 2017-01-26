@@ -30,6 +30,7 @@ class ValidationFactory
     const TYPE_URL        = 'url';
     const TYPE_ACCEPTED   = 'accepted';
     const TYPE_ACTIVE_URL = 'active_url';
+    const TYPE_CLASS      = 'class';
 
 
     const EXTENDED_TYPE_AFTER                = 'after';
@@ -66,8 +67,10 @@ class ValidationFactory
     public function createValidation(string $validation)
     {
         $description = $this->hasExtendDescription($validation);
-        $dataType    = static::getDataType($validation);
-        if (!$dataType && $description) {
+        if (static::TYPE_CLASS === $validation) {
+            return new ClassValidationProcessor($description);
+        }
+        if ($description) {
             return new ExtendedValidationProcessor((string) $description);
         }
 
@@ -126,6 +129,7 @@ class ValidationFactory
             static::EXTENDED_TYPE_REQUIRED_SAME,
             static::EXTENDED_TYPE_REQUIRED_SIZE,
             static::EXTENDED_TYPE_REQUIRED_UNIQUE,
+            static::TYPE_CLASS,
         ];
     }
 
@@ -159,7 +163,6 @@ class ValidationFactory
             static::EXTENDED_TYPE_MIME_TYPES,
             static::EXTENDED_TYPE_REQUIRED_UNIQUE,
             static::EXTENDED_TYPE_REGEX,
-            static::TYPE_JSON,
             static::EXTENDED_TYPE_DATE_FORMAT,
             static::TYPE_DATE,
             static::TYPE_ARRAY,
@@ -173,6 +176,10 @@ class ValidationFactory
         ];
         if (in_array($validation, $stringFields)) {
             return static::TYPE_STRING;
+        }
+
+        if (in_array($validation, [static::TYPE_CLASS, static::TYPE_JSON])) {
+            return static::TYPE_JSON;
         }
 
         return null;
@@ -212,6 +219,7 @@ class ValidationFactory
             ValidationFactory::EXTENDED_TYPE_REQUIRED_SAME        => 'The given field must match the field under validation.',
             ValidationFactory::EXTENDED_TYPE_REQUIRED_SIZE        => 'Size of your value such as string length or number items of array',
             ValidationFactory::EXTENDED_TYPE_REQUIRED_UNIQUE      => 'Reflect to you column. Exp: table,column,except,idColumn',
+            ValidationFactory::TYPE_CLASS                         => 'Provide your class name',
         ];
 
         /**

@@ -1,7 +1,8 @@
 <?php
-namespace Tests\Unit\Console\Parser;
+namespace Tests\Weburnit\Unit\Console\Parser;
 
 
+use gossi\codegen\model\PhpClass;
 use Weburnit\Console\Commands\Parser\FieldParser;
 
 class FieldParserTest extends AbstractParser
@@ -19,20 +20,6 @@ class FieldParserTest extends AbstractParser
 
     public function testField()
     {
-        $result         = $this->parser->parse($this->modelProcessor);
-        $expectedResult =
-'    /**
-    * @var string
-    * @SWG\Property(property="orderNumber", type="string", description="Order Number")
-    */
-    private $orderNumber;
-    /**
-    * @var string
-    * @SWG\Property(property="platformCode", type="string", description="platform code")
-    */
-    private $platformCode;
-';
-
-        static::assertEquals($expectedResult, $result, 'Must reflect format');
+        $this->parser->parse($this->modelProcessor, new PhpClass());
     }
 }

@@ -20,7 +20,7 @@ abstract class AbstractProcessor implements ProcessorInterface
             $options  = $this->getDefaultOptions();
             $key      = count($options) ? $command->choice($this->getQuestion(), $options, $this->getDefault()) :
                 $command->anticipate($this->getQuestion(), [], $this->getDefault());
-            $continue = $this->processKey($key);
+            $continue = $this->processInputValue($key);
             if (!$continue) {
                 return;
             }
@@ -31,7 +31,6 @@ abstract class AbstractProcessor implements ProcessorInterface
 
         return $processor;
     }
-
 
     /**
      * @return mixed
@@ -46,7 +45,7 @@ abstract class AbstractProcessor implements ProcessorInterface
      *
      * @return bool
      */
-    abstract protected function processKey($key): bool;
+    abstract protected function processInputValue($key): bool;
 
     /**
      * @return string

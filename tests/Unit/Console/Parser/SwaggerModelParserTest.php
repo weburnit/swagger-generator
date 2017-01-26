@@ -1,11 +1,13 @@
 <?php
-namespace Tests\Unit\Console\Parser;
+namespace Tests\Weburnit\Unit\Console\Parser;
 
+use gossi\codegen\generator\CodeGenerator;
+use gossi\codegen\model\PhpClass;
 use Weburnit\Console\Commands\Parser\SwaggerClassParser;
 
 /**
  * Class SwaggerModelParserTest
- * @package Tests\Unit\Console\Parser
+ * @package Tests\Weburnit\Unit\Console\Parser
  */
 class SwaggerModelParserTest extends AbstractParser
 {
@@ -23,44 +25,43 @@ class SwaggerModelParserTest extends AbstractParser
 
     public function testClassValue()
     {
-        $result = $this->parser->parse($this->modelProcessor);
+        $class = new PhpClass();
+        $this->parser->parse($this->modelProcessor, $class);
 
-        $classContent = '<?php
-declare(strict_types = 1);
-
-namespace Weburnit\ValueObjects;
+        $generator    = new CodeGenerator();
+        $classContent = 'namespace Weburnit\ValueObjects;
 
 use Swagger\Annotations as SWG;
 
 /**
-* Product Description
-*
-* @SWG\Definition(
-*     definition="Product",
-*     description="Product Description",
-*     type="object",
-*     required={"orderNumber","platformCode"}
-* )
-*/
-class Product
-{
-    public static $validation = [        \'orderNumber\'=>\'string|required\',
-        \'platformCode\'=>\'exists:product,platformCode|string|required\',
-];
+ * Product Description
+ * 
+ * @SWG\Definition(definition="Product", description="Product Description", type="object",required={"orderNumber","platformCode"})
+ */
+class Product {
 
-    /**
-    * @var string
-    * @SWG\Property(property="orderNumber", type="string", description="Order Number")
-    */
-    private $orderNumber;
-    /**
-    * @var string
-    * @SWG\Property(property="platformCode", type="string", description="platform code")
-    */
-    private $platformCode;
+	/**
+	 * @var array
+	 */
+	public static $validation = [\'orderNumber\'=>\'string|required\',\'platformCode\'=>\'exists:product,platformCode|string|required\',];
 
-}
-';
-        static::assertEquals($classContent, $result, 'Class must reflect this content');
+	/**
+	 * Order Number
+	 * 
+	 * @SWG\Property(description="Order Number")
+	 * @var string
+	 */
+	protected $orderNumber;
+
+	/**
+	 * platform code
+	 * 
+	 * @SWG\Property(description="platform code")
+	 * @var string
+	 */
+	protected $platformCode;
+}';
+
+        static::assertEquals($classContent, $generator->generate($class));
     }
 }

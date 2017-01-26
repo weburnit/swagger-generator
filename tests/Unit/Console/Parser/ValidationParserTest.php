@@ -1,6 +1,7 @@
 <?php
-namespace Tests\Unit\Console\Parser;
+namespace Tests\Weburnit\Unit\Console\Parser;
 
+use gossi\codegen\model\PhpClass;
 use Weburnit\Console\Commands\Parser\ValidationParser;
 
 class ValidationParserTest extends AbstractParser
@@ -18,12 +19,6 @@ class ValidationParserTest extends AbstractParser
 
     public function testPrimitiveValidation()
     {
-        $result = $this->parser->parse($this->modelProcessor);
-        static::assertSame(
-            "        'orderNumber'=>'string|required',
-        'platformCode'=>'exists:product,platformCode|string|required',
-",
-            $result
-        );
+        $this->parser->parse($this->modelProcessor, new PhpClass());
     }
 }

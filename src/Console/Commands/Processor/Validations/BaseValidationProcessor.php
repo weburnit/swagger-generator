@@ -61,7 +61,7 @@ class BaseValidationProcessor extends AbstractProcessor
     /**
      * {@inheritdoc}
      */
-    protected function processKey($key): bool
+    protected function processInputValue($key): bool
     {
         return true;
     }

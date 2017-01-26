@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands\Parser;
 
-use Weburnit\Console\Commands\Processor\ModelProcessor;
+use gossi\codegen\model\PhpClass;
+use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
 
 /**
  * Class ParserInterface
@@ -12,9 +13,8 @@ use Weburnit\Console\Commands\Processor\ModelProcessor;
 interface ParserInterface
 {
     /**
-     * @param ModelProcessor $processor
-     *
-     * @return string
+     * @param ModelProcessorInterface $processor
+     * @param PhpClass                $class
      */
-    public function parse(ModelProcessor $processor): string;
+    public function parse(ModelProcessorInterface $processor, PhpClass $class);
 }

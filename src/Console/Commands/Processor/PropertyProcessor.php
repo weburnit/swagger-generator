@@ -45,7 +45,7 @@ class PropertyProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
-        return sprintf('%d. Enter your property name such as isFinished, orderNumber', ModelProcessor::$propertyIndex);
+        return 'Enter your property name such as isFinished, orderNumber';
     }
 
     /**
@@ -59,7 +59,7 @@ class PropertyProcessor extends AbstractProcessor
     /**
      * {@inheritdoc}
      */
-    protected function processKey($key): bool
+    protected function processInputValue($key): bool
     {
         return !empty($key);
     }

@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands\Parser;
 
-use Weburnit\Console\Commands\Parser\Template\Util;
-use Weburnit\Console\Commands\Processor\ModelProcessor;
+use gossi\codegen\model\PhpClass;
+use gossi\codegen\model\PhpProperty;
+use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
+use Weburnit\PhpDocumentor\Tags\SwaggerTag;
 
 /**
  * Class FieldParser
@@ -13,47 +15,32 @@ use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
  */
 class FieldParser implements ParserInterface
 {
-    private $template;
-
     /**
-     * FieldParser constructor.
+     * {@inheritdoc}
      */
-    public function __construct()
+    public function parse(ModelProcessorInterface $processor, PhpClass $class)
     {
-        $this->template = Util::getTemplate(Util::TEMPLATE_FIELD);
-    }
+        $properties = [];
+        foreach ($processor->getProperties() as $field) {
 
-    /**
-     * @param ModelProcessor $processor
-     *
-     * @return string
-     */
-    public function parse(ModelProcessor $processor): string
-    {
-        $templates = '';
-        foreach ($processor->getProperties() as $processorResult) {
-            $template = $this->template;
-            $template = Util::update($template, 'field', $processorResult->getKey());
-            $template = Util::update($template, 'description', $processorResult->getDescription());
-
-            $dataType = ValidationFactory::getDataType($processorResult->getValue()->getKey());
-            if (!$dataType) {
-                $dataType = $processorResult->getValue()->getValue()->getValue()->getKey();
+            $dataType = ValidationFactory::getDataType($field->getValue()->getInput());
+            if (ValidationFactory::TYPE_CLASS === $field->getValue()->getInput()) {
+                $dataType = $field->getValue()->getValue()->getInput();
             }
-            $template = Util::update(
-                $template,
-                'type',
-                $dataType
+            if (!$dataType) {
+                $dataType = $field->getValue()->getValue()->getValue()->getInput();
+            }
+            $property = PhpProperty::create($field->getInput())
+                ->setVisibility('protected')
+                ->setDescription($field->getDescription());
+            $property->getDocblock()->appendTag(
+                new SwaggerTag(sprintf('SWG\Property(description="%s")', $field->getDescription()))
             );
-            $template = Util::update(
-                $template,
-                'varType',
-                $processorResult->isRequired() ? $dataType : sprintf('%s|null', $dataType)
-            );
+            $property->setType($field->isRequired() ? $dataType : sprintf('%s|null', $dataType));
 
-            $templates .= $template;
+            $properties[] = $property;
         }
 
-        return $templates;
+        $class->setProperties($properties);
     }
 }

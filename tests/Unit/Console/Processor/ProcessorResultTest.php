@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Unit\Console\Processor;
+namespace Tests\Weburnit\Unit\Console\Processor;
 
 use Weburnit\Console\Commands\Processor\ProcessorResult;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;

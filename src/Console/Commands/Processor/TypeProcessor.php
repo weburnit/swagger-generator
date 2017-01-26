@@ -29,10 +29,13 @@ class TypeProcessor extends AbstractProcessor
 
     /**
      * TypeProcessor constructor.
+     *
+     * @param string $type
      */
-    public function __construct()
+    public function __construct(string $type = ValidationFactory::TYPE_STRING)
     {
         $this->factory = new ValidationFactory();
+        $this->type    = $type;
     }
 
     /**
@@ -61,7 +64,7 @@ class TypeProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
-        return 'provide type for this property: number, string...';
+        return 'provide type for this property: number, string, etc. Default is string.';
     }
 
     /**
@@ -75,9 +78,11 @@ class TypeProcessor extends AbstractProcessor
     /**
      * {@inheritdoc}
      */
-    protected function processKey($type): bool
+    protected function processInputValue($type): bool
     {
-        $this->type          = $type;
+        if (in_array($type, $this->getDefaultOptions())) {
+            $this->type = $type;
+        }
         $this->nextProcessor = $this->factory->createValidation($type);
 
         return is_object($this->nextProcessor);

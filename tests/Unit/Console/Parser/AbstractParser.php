@@ -1,21 +1,21 @@
 <?php
-namespace Tests\Unit\Console\Parser;
+namespace Tests\Weburnit\Unit\Console\Parser;
 
-use Weburnit\Console\Commands\Processor\ModelProcessor;
+use Weburnit\Console\Commands\Processor\ValueObjectProcessor;
 use Weburnit\Console\Commands\Processor\ProcessorResult;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 abstract class AbstractParser extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ModelProcessor
+     * @var ValueObjectProcessor|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $modelProcessor;
 
     protected function setUp()
     {
         parent::setUp();
-        $modelProcessor = $this->createMock(ModelProcessor::class);
+        $modelProcessor = $this->createMock(ValueObjectProcessor::class);
         $modelProcessor->method('getModelClass')->willReturn('Product');
         $modelProcessor->method('getDescription')->willReturn('Product Description');
         $properties = [];
@@ -32,6 +32,14 @@ abstract class AbstractParser extends \PHPUnit_Framework_TestCase
         );
         $second->setDescription('platform code');
         $second->setRequired(true);
+
+        $third = new ProcessorResult(
+            'order',
+            new ProcessorResult(
+                ValidationFactory::TYPE_CLASS,
+                new ProcessorResult('Order')
+            )
+        );
         $properties[] = $first;
         $properties[] = $second;
         $modelProcessor->method('getProperties')->willReturn($properties);

@@ -14,7 +14,7 @@ class ProcessorResult
     /**
      * @var string
      */
-    private $key;
+    private $input;
 
     /**
      * @var string | null | ProcessorResult
@@ -34,12 +34,12 @@ class ProcessorResult
     /**
      * ValidationRule constructor.
      *
-     * @param string      $key
+     * @param string      $input
      * @param null|string $value
      */
-    public function __construct($key, $value = null)
+    public function __construct($input, $value = null)
     {
-        $this->key   = $key;
+        $this->input = $input;
         $this->value = $value;
     }
 
@@ -78,9 +78,9 @@ class ProcessorResult
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getInput(): string
     {
-        return $this->key;
+        return $this->input;
     }
 
     /**
@@ -96,12 +96,12 @@ class ProcessorResult
      */
     public function __toString()
     {
-        $value = $this->getValue()->getKey();
+        $value = $this->getValue()->getInput();
         if ($this->value) {
-            $dataType = ValidationFactory::getDataType($this->getValue()->getKey());
+            $dataType = ValidationFactory::getDataType($this->getValue()->getInput());
             if (!$dataType) {
-                $value = sprintf('%s:%s', $this->value->getKey(), (string) $this->value->getValue()->getKey());
-                $value = sprintf('%s|%s', $value, $this->value->getValue()->getValue()->getKey());
+                $value = sprintf('%s:%s', $this->value->getInput(), (string) $this->value->getValue()->getInput());
+                $value = sprintf('%s|%s', $value, $this->value->getValue()->getValue()->getInput());
             }
         }
 

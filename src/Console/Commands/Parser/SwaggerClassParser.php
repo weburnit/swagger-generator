@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands\Parser;
 
-use Weburnit\Console\Commands\Parser\Template\Util;
-use Weburnit\Console\Commands\Processor\ModelProcessor;
+use gossi\codegen\model\PhpClass;
+use Weburnit\PhpDocumentor\Tags\SwaggerTag;
+use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
+use Weburnit\Console\Commands\Processor\ValueObjectProcessor;
 
 /**
  * Class SwaggerParser
@@ -32,48 +34,41 @@ class SwaggerClassParser implements ParserInterface
     }
 
     /**
-     * @param ModelProcessor $processor
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function parse(ModelProcessor $processor): string
+    public function parse(ModelProcessorInterface $processor, PhpClass $class)
     {
+        $class->setDescription($processor->getDescription());
+        $class->setNamespace($processor->getNamespace());
+        $class->setName($processor->getModelClass());
+        $class->declareUse('Swagger\Annotations as SWG');
         /**
-         * @var $processor ModelProcessor
+         * @var $processor ValueObjectProcessor
          */
-        $template    = Util::getTemplate(Util::TEMPLATE_CLASS);
-        $information = Util::getTemplate(Util::TEMPLATE_INFORMATION);
-
-        $information    = Util::update($information, 'information', $processor->getDescription());
-        $information    = Util::update($information, 'class', $processor->getModelClass());
         $requiredFields = [];
         $required       = '';
         foreach ($processor->getProperties() as $field) {
             if ($field->isRequired()) {
-                $requiredFields[] = sprintf('"%s"', $field->getKey());
+                $requiredFields[] = sprintf('"%s"', $field->getInput());
             }
         }
         if (count($requiredFields)) {
-            $required    = sprintf(
-                ',
-*     required={%s}',
+            $required = sprintf(
+                ',required={%s}',
                 implode(',', $requiredFields)
             );
-            $information = Util::update($information, 'required', $required);
         }
 
+        $swaggerContent = sprintf(
+            'SWG\Definition(definition="%s", description="%s", type="object"%s)',
+            $processor->getModelClass(),
+            $processor->getDescription(),
+            $required
+        );
+        $class->getDocblock()->appendTag(new SwaggerTag($swaggerContent));
 
-        $template = Util::update($template, 'class_information', $information);
+        $this->fieldParser->parse($processor, $class);
 
-        $fields   = $this->fieldParser->parse($processor);
-        $template = Util::update($template, 'fields', $fields);
-
-        $validations = $this->validationParser->parse($processor);
-        $template    = Util::update($template, 'validation', $validations);
-
-        $template = Util::update($template, 'namespace', $processor->getNamespace());
-        $template = Util::update($template, 'class', $processor->getModelClass());
-
-        return $template;
+        $this->validationParser->parse($processor, $class);
     }
 }
