@@ -64,6 +64,10 @@ class TypeProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
+        if ($this->type) {
+            return sprintf('provide type for this property: number, string, etc. Current is "%s"', $this->type);
+        }
+
         return 'provide type for this property: number, string, etc. Default is string.';
     }
 

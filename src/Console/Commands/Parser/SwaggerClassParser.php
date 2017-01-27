@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace Weburnit\Console\Commands\Parser;
 
 use gossi\codegen\model\PhpClass;
-use Weburnit\PhpDocumentor\Tags\SwaggerTag;
 use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
 use Weburnit\Console\Commands\Processor\ValueObjectProcessor;
+use Weburnit\PhpDocumentor\Tags\SwaggerTag;
 
 /**
  * Class SwaggerParser

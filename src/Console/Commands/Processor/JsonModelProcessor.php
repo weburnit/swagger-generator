@@ -53,6 +53,9 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
     public function request(Command $command)
     {
         try {
+            /**
+             * @var $jsonObjects array
+             */
             $jsonObjects = json_decode($this->jsonContent, true);
 
         } catch (\Exception $e) {
@@ -81,7 +84,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function getNextProcessor()
     {
-        // TODO: Implement getNextProcessor() method.
+        return null;
     }
 
     /**
@@ -89,7 +92,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function getModelClass(): string
     {
-        // TODO: Implement getModelClass() method.
+        return $this->modelClass;
     }
 
     /**
@@ -97,7 +100,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function getDescription(): string
     {
-        // TODO: Implement getDescription() method.
+        return $this->description;
     }
 
     /**
@@ -105,7 +108,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function getNamespace(): string
     {
-        // TODO: Implement getNamespace() method.
+        return $this->namespace;
     }
 
     /**
@@ -113,7 +116,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function getProperties(): array
     {
-        // TODO: Implement getProperties() method.
+        return $this->properties;
     }
 
     /**
@@ -131,7 +134,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     protected function processInputValue($key): bool
     {
-        // TODO: Implement processInputValue() method.
+        return true;
     }
 
     /**

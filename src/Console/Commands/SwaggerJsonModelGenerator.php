@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands;
 
+use gossi\codegen\generator\CodeFileGenerator;
+use gossi\codegen\model\PhpClass;
 use Symfony\Component\Filesystem\Filesystem;
 use Weburnit\Console\Commands\Parser\SwaggerClassParser;
 use Weburnit\Console\Commands\Processor\JsonModelProcessor;
@@ -41,16 +43,24 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
      */
     public function handle()
     {
+        $codeGenerator = new CodeFileGenerator();
         $rootNamespace = $this->getNamespace();
-        $processor     = new JsonModelProcessor($this->getJsonContent());
+        $jsonContent   = $this->getJsonContent();
+
+        $processor = new JsonModelProcessor($jsonContent);
         $processor->request($this);
         $processor->setNamespace($rootNamespace);
 
-        $parser     = new SwaggerClassParser();
-        $content    = $parser->parse($processor);
+        $parser = new SwaggerClassParser();
+        $model  = new PhpClass();
+        $parser->parse($processor, $model);
         $className  = $processor->getModelClass();
         $fileSystem = new Filesystem();
-        $fileSystem->dumpFile($this->source.DIRECTORY_SEPARATOR.$className.'.php', $content);
+
+        $fileSystem->dumpFile(
+            $this->argument('src').DIRECTORY_SEPARATOR.$className.'.php',
+            $codeGenerator->generate($model)
+        );
     }
 
     /**
@@ -59,7 +69,7 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
      */
     private function getJsonContent(): string
     {
-        $jsonFile = $this->argument('src');
+        $jsonFile = $this->argument('json');
         if (!file_exists($jsonFile)) {
             $jsonFile = sprintf('%s%s%s', __DIR__, DIRECTORY_SEPARATOR, $jsonFile);
         }

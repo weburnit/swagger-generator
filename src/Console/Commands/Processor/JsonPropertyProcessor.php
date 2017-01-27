@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Weburnit\Console\Commands\Processor;
 
 use Illuminate\Console\Command;
+use Weburnit\Console\Commands\Processor\Validations\ClassValidationProcessor;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 /**
@@ -22,6 +23,8 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     private $value;
 
+    private $factory;
+
     /**
      * JsonPropertyProcessor constructor.
      *
@@ -32,6 +35,7 @@ class JsonPropertyProcessor extends AbstractProcessor
     {
         $this->property = $property;
         $this->value    = $value;
+        $this->factory  = new ValidationFactory();
     }
 
     /**
@@ -58,15 +62,19 @@ class JsonPropertyProcessor extends AbstractProcessor
     /**
      * @return ProcessorInterface
      */
-    public function getNextProcessor(): ProcessorInterface
+    public function getNextProcessor()
     {
         $type = $this->detectDataType($this->value);
 
-        if (in_array($type, ValidationFactory::getValidationOptions())) {
-            return new TypeProcessor($type);
+        if ($validation = $this->factory->createValidation($type)) {
+            return $validation;
         }
 
-        return null;
+        if (ValidationFactory::TYPE_ARRAY === $type) {
+            return new ClassValidationProcessor(sprintf('Provide your class name for field(%s)', $this->property));
+        }
+
+        return new TypeProcessor($type);
     }
 
     /**
@@ -96,7 +104,7 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
-        return sprintf('Enter for keep using default(%s) property\'s name or type your proper one', $this->property);
+        return sprintf('Rename field(%s) or Press Enter to ignore', $this->property);
     }
 
     /**
@@ -114,6 +122,12 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     private function detectDataType($value)
     {
+        if (is_bool($value)) {
+            return ValidationFactory::TYPE_BOOLEAN;
+        }
+        if (is_array($value)) {
+            return ValidationFactory::TYPE_ARRAY;
+        }
         if (is_numeric($value)) {
             if ((int) $value == $value) {
                 return ValidationFactory::TYPE_INTEGER;
@@ -131,7 +145,12 @@ class JsonPropertyProcessor extends AbstractProcessor
             if (!is_numeric(current($keys))) {
                 return ValidationFactory::TYPE_ARRAY;
             }
+
             return ValidationFactory::TYPE_CLASS;
+        }
+
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+            return ValidationFactory::TYPE_EMAIL;
         }
 
         return ValidationFactory::TYPE_STRING;
