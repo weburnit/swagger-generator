@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Weburnit\Console\Commands\Processor;
 
 use Illuminate\Console\Command;
-use Weburnit\Console\Commands\Processor\Validations\ClassValidationProcessor;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 /**
@@ -43,7 +42,7 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     public function request(Command $command)
     {
-        $processor = parent::request($command);
+        $processor = $this->process($command);
 
         if ($processor) {
             $description = $command->ask(
@@ -66,12 +65,15 @@ class JsonPropertyProcessor extends AbstractProcessor
     {
         $type = $this->detectDataType($this->value);
 
-        if ($validation = $this->factory->createValidation($type)) {
-            return $validation;
+        if (ValidationFactory::TYPE_ARRAY === $type) {
+            return new JsonModelProcessor(
+                end($this->value),
+                sprintf('Provide your class name for field(%s)', $this->property)
+            );
         }
 
-        if (ValidationFactory::TYPE_ARRAY === $type) {
-            return new ClassValidationProcessor(sprintf('Provide your class name for field(%s)', $this->property));
+        if ($validation = $this->factory->createValidation($type)) {
+            return $validation;
         }
 
         return new TypeProcessor($type);
@@ -112,7 +114,7 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     protected function getDefaultOptions(): array
     {
-        return [];
+        return [$this->property];
     }
 
     /**

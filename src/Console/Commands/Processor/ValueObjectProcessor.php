@@ -54,7 +54,7 @@ class ValueObjectProcessor extends AbstractProcessor implements ModelProcessorIn
     public function request(Command $command)
     {
         if (!$this->description && !$this->modelClass) {
-            $property = parent::request($command);
+            $property = $this->process($command);
 
             $description = $command->ask(
                 sprintf('%s description', 'Class'),

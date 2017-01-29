@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
  * Class JsonModelProcessor
  * @package Weburnit\Console\Commands\Processor
  */
-class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInterface
+class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInterface, ResultInterface
 {
     /**
      * @var string
@@ -22,9 +22,9 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
     private $modelClass;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $jsonContent;
+    protected $jsonObject;
 
     /**
      * @var
@@ -37,13 +37,20 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
     private $properties;
 
     /**
+     * @var string
+     */
+    private $question;
+
+    /**
      * JsonModelProcessor constructor.
      *
-     * @param string $jsonContent
+     * @param array  $jsonObject
+     * @param string $question
      */
-    public function __construct(string $jsonContent)
+    public function __construct(array $jsonObject, string $question = null)
     {
-        $this->jsonContent = $jsonContent;
+        $this->jsonObject = $jsonObject;
+        $this->question   = $question;
     }
 
 
@@ -52,18 +59,7 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     public function request(Command $command)
     {
-        try {
-            /**
-             * @var $jsonObjects array
-             */
-            $jsonObjects = json_decode($this->jsonContent, true);
-
-        } catch (\Exception $e) {
-            $command->error('JSON content is not valid');
-
-            return;
-        }
-        $result = parent::request($command);
+        $result = $this->process($command);
 
         $description = $command->ask(
             sprintf('%s description', 'Model'),
@@ -73,10 +69,12 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
         $this->description = $description;
 
         $this->modelClass = $result->getInput();
-        foreach ($jsonObjects as $key => $value) {
+        foreach ($this->jsonObject as $key => $value) {
             $processor          = new JsonPropertyProcessor($key, $value);
             $this->properties[] = $processor->request($command);
         }
+
+        return $this;
     }
 
     /**
@@ -142,6 +140,10 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     protected function getQuestion(): string
     {
+        if ($this->question) {
+            return $this->question;
+        }
+
         return 'What is your parent Model?';
     }
 
@@ -151,5 +153,29 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
     protected function getDefaultOptions(): array
     {
         return [];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequired(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInput(): string
+    {
+        return $this->modelClass;
+    }
+
+    /**
+     * @return mixed|ResultInterface
+     */
+    public function getValue()
+    {
+        return $this;
     }
 }

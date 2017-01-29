@@ -3,7 +3,9 @@ declare(strict_types = 1);
 
 namespace Weburnit\Console\Commands\Processor\Validations;
 
+use Illuminate\Console\Command;
 use Weburnit\Console\Commands\Processor\AbstractProcessor;
+use Weburnit\Console\Commands\Processor\ProcessorResult;
 
 /**
  * Class BaseProcessor
@@ -37,14 +39,6 @@ class BaseValidationProcessor extends AbstractProcessor
     /**
      * @return string
      */
-    public function getDefault()
-    {
-        return false;
-    }
-
-    /**
-     * @return string
-     */
     protected function getQuestion(): string
     {
         return $this->question;
@@ -64,5 +58,15 @@ class BaseValidationProcessor extends AbstractProcessor
     protected function processInputValue($key): bool
     {
         return true;
+    }
+
+    /**
+     * @param Command $command
+     *
+     * @return ProcessorResult
+     */
+    public function request(Command $command)
+    {
+        return $this->process($command);
     }
 }

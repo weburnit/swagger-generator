@@ -23,6 +23,7 @@ class ModelProcessorTest extends \PHPUnit_Framework_TestCase
         $this->command = $this->createMock(Command::class);
         $this->command->method('ask')->withAnyParameters()->willReturn('Description');
         $this->command->method('askWithCompletion')->withAnyParameters()->willReturn('Y');
+        $this->command->method('info')->withAnyParameters();
     }
 
     public function testHandle()
@@ -36,29 +37,27 @@ class ModelProcessorTest extends \PHPUnit_Framework_TestCase
                     false,
                 ],
                 ['Enter your property name such as isFinished, orderNumber', [], false],
+                [
+                    'provide type for this property: number, string, etc. Current is "string"',
+                    ValidationFactory::getValidationOptions(),
+                    'string',
+                ],
                 ['Provide your class name', [], false],
-                ['Enter your property name such as isFinished, orderNumber', [], false]
+                ['Enter your property name such as isFinished, orderNumber', [], false],
+                [
+                    'provide type for this property: number, string, etc. Current is "string"',
+                    ValidationFactory::getValidationOptions(),
+                    'string',
+                ]
             )
             ->willReturnOnConsecutiveCalls(
                 'ModelObject',
                 'order',
+                'class',
                 'Order',
-                'orderNumber'
+                'orderNumber',
+                'string'
             );
-        $this->command->method('choice')
-            ->withConsecutive(
-                [
-                    'provide type for this property: number, string, etc. Default is string.',
-                    ValidationFactory::getValidationOptions(),
-                    false,
-                ],
-                [
-                    'provide type for this property: number, string, etc. Default is string.',
-                    ValidationFactory::getValidationOptions(),
-                    false,
-                ]
-            )
-            ->willReturnOnConsecutiveCalls('class', 'string');
         $processor->request($this->command);
     }
 }

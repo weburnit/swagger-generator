@@ -9,7 +9,7 @@ use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
  * Class ValidationRule
  * @package Weburnit\Console\Commands\Processor
  */
-class ProcessorResult
+class ProcessorResult implements ResultInterface
 {
     /**
      * @var string

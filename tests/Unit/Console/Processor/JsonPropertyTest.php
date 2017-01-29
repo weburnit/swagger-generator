@@ -2,11 +2,16 @@
 namespace Tests\Weburnit\Unit\Console\Processor;
 
 use Illuminate\Console\Command;
+use Weburnit\Console\Commands\Processor\JsonModelProcessor;
 use Weburnit\Console\Commands\Processor\JsonPropertyProcessor;
+use Weburnit\Console\Commands\Processor\ProcessorResult;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 class JsonPropertyTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $command;
 
     protected function setUp()
@@ -15,6 +20,7 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
         $this->command = $this->createMock(Command::class);
         $this->command->method('ask')->withAnyParameters()->willReturn('Description');
         $this->command->method('askWithCompletion')->withAnyParameters()->willReturn('Y');
+        $this->command->method('info')->withAnyParameters();
     }
 
     /**
@@ -31,12 +37,12 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
             ->withConsecutive(
                 [
                     sprintf('Rename field(%s) or Press Enter to ignore', $key),
-                    [],
+                    [$key],
                     $key,
                 ],
                 [
                     sprintf('provide type for this property: number, string, etc. Current is "%s"', $property),
-                    [],
+                    ValidationFactory::getValidationOptions(),
                     $property,
                 ]
             )
@@ -51,30 +57,51 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getExtendArrayDataProvider
      *
      * @param $key
-     * @param $property
+     * @param $class
      * @param $value
      */
-    public function testArrayDataProperty($key, $property, $value)
+    public function testArrayDataProperty($key, $class, $value)
     {
         $processor = new JsonPropertyProcessor($key, $value);
         $this->command->method('anticipate')
             ->withConsecutive(
                 [
                     sprintf('Rename field(%s) or Press Enter to ignore', $key),
-                    [],
+                    [$key],
                     $key,
                 ],
                 [
                     sprintf('Provide your class name for field(%s)', $key),
                     [],
                     false,
+                ],
+                ['Rename field(orderNumber) or Press Enter to ignore', ['orderNumber'], 'orderNumber'],
+                [
+                    'provide type for this property: number, string, etc. Current is "string"',
+                    ValidationFactory::getValidationOptions(),
+                    'string',
                 ]
             )
             ->willReturnOnConsecutiveCalls(
                 $key,
-                $property
+                $class,
+                'order_number',
+                'string'
             );
-        $processor->request($this->command);
+
+        $result = $processor->request($this->command);
+        static::assertInstanceOf(ProcessorResult::class, $result);
+        /**
+         * @var $model JsonModelProcessor
+         */
+        $model = $result->getValue();
+        static::assertInstanceOf(JsonModelProcessor::class, $model);
+        static::assertEquals('ItemList', $model->getModelClass(), 'Class must be updated through command');
+        static::assertEquals(
+            'order_number',
+            (end($model->getProperties()))->getInput(),
+            'Property must be order_number'
+        );
     }
 
     public function getPrimitiveDataProvider()
@@ -112,9 +139,9 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
     {
         return [
             '#1' => [
-                'key'      => 'itemList',
-                'property' => 'array',
-                'value'    => [['orderNumber' => 'something']],
+                'key'   => 'itemList',
+                'class' => 'ItemList',
+                'value' => [['orderNumber' => 'something']],
             ],
         ];
     }

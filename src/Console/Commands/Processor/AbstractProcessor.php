@@ -12,20 +12,21 @@ use Illuminate\Console\Command;
 abstract class AbstractProcessor implements ProcessorInterface
 {
     /**
-     * {@inheritdoc}
+     * @param Command $command
+     *
+     * @return void|ProcessorResult
      */
-    public function request(Command $command)
+    protected function process(Command $command)
     {
         if ($this->getQuestion()) {
-            $options  = $this->getDefaultOptions();
-            $key      = count($options) ? $command->choice($this->getQuestion(), $options, $this->getDefault()) :
-                $command->anticipate($this->getQuestion(), [], $this->getDefault());
+            $key      = $this->processInput($command);
             $continue = $this->processInputValue($key);
             if (!$continue) {
                 return;
             }
         }
-        $result = $this->getNextProcessor() ? $this->getNextProcessor()->request($command) : null;
+        $nextProcess = $this->getNextProcessor();
+        $result      = $nextProcess ? $nextProcess->request($command) : null;
 
         $processor = new ProcessorResult($key, $result);
 
@@ -56,4 +57,24 @@ abstract class AbstractProcessor implements ProcessorInterface
      * @return array
      */
     abstract protected function getDefaultOptions(): array;
+
+    /**
+     * @param Command $command
+     *
+     * @return string
+     */
+    private function processInput(Command $command)
+    {
+        $options = $this->getDefaultOptions();
+        if (count($options)) {
+            $command->line('Options: '.implode(', ', $options), 'comment');
+        }
+        $key = $command->anticipate(
+            $this->getQuestion(),
+            array_filter($options),
+            $this->getDefault()
+        );
+
+        return $key;
+    }
 }

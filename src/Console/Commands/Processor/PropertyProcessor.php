@@ -24,7 +24,7 @@ class PropertyProcessor extends AbstractProcessor
      */
     public function request(Command $command)
     {
-        $processor = parent::request($command);
+        $processor = $this->process($command);
 
         if ($processor) {
             $description = $command->ask(

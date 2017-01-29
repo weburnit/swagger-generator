@@ -47,7 +47,7 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
         $rootNamespace = $this->getNamespace();
         $jsonContent   = $this->getJsonContent();
 
-        $processor = new JsonModelProcessor($jsonContent);
+        $processor = new JsonModelProcessor(json_decode($jsonContent, true));
         $processor->request($this);
         $processor->setNamespace($rootNamespace);
 
@@ -61,6 +61,16 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
             $this->argument('src').DIRECTORY_SEPARATOR.$className.'.php',
             $codeGenerator->generate($model)
         );
+
+        foreach ($processor->getProperties() as $property) {
+            if ($property->getValue() instanceof JsonModelProcessor) {
+                $this->comment('Writing sub field');
+                $fileSystem->dumpFile(
+                    $this->argument('src').DIRECTORY_SEPARATOR.$property->getValue()->getModelClass().'.php',
+                    $codeGenerator->generate($model)
+                );
+            }
+        }
     }
 
     /**

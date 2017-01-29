@@ -3,6 +3,8 @@ namespace Tests\Weburnit\Unit\Console\Processor;
 
 use Illuminate\Console\Command;
 use Weburnit\Console\Commands\Processor\JsonModelProcessor;
+use Weburnit\Console\Commands\Processor\ProcessorResult;
+use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 class JsonModelProcessorTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,6 +18,7 @@ class JsonModelProcessorTest extends \PHPUnit_Framework_TestCase
         $this->command = $this->createMock(Command::class);
         $this->command->method('ask')->withAnyParameters()->willReturn('Description');
         $this->command->method('askWithCompletion')->withAnyParameters()->willReturn('Y');
+        $this->command->method('info')->withAnyParameters();
 
         $this->command->method('anticipate')
             ->withConsecutive(
@@ -23,17 +26,38 @@ class JsonModelProcessorTest extends \PHPUnit_Framework_TestCase
                     'What is your parent Model?',
                     [],
                     false,
+                ],
+                ['Rename field(platformName) or Press Enter to ignore', ['platformName'], 'platformName'],
+                [
+                    'provide type for this property: number, string, etc. Current is "string"',
+                    ValidationFactory::getValidationOptions(),
+                    'string',
                 ]
             )
             ->willReturnOnConsecutiveCalls(
-                'JsonClass'
+                'JsonClass',
+                'platformName',
+                'string'
             );
 
-        $json = '{"platformName":"LAZADA_MY","price": 242.000,"created_at": "2017-12-12 12:12:12"}';
+        $json = '{"platformName":"LAZADA_MY"}';
 
 
-        $processor = new JsonModelProcessor($json);
+        $processor = new JsonModelProcessor(json_decode($json, true));
 
         $processor->request($this->command);
+        static::assertEquals(1, count($processor->getProperties()), 'Must have 1 property');
+
+        /**
+         * @var $property ProcessorResult
+         */
+        $property = end($processor->getProperties());
+        static::assertInstanceOf(
+            ProcessorResult::class,
+            $property,
+            'Must have one property'
+        );
+        static::assertEquals('platformName', $property->getInput(), 'Must have platform name as property');
+        static::assertEquals('string', $property->getValue()->getInput(), 'Must be string');
     }
 }

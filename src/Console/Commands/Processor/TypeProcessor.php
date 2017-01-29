@@ -43,7 +43,7 @@ class TypeProcessor extends AbstractProcessor
      */
     public function request(Command $command)
     {
-        $result = parent::request($command);
+        $result = $this->process($command);
         if (!$result) {
             $result = new ProcessorResult($this->type);
         }
@@ -90,5 +90,17 @@ class TypeProcessor extends AbstractProcessor
         $this->nextProcessor = $this->factory->createValidation($type);
 
         return is_object($this->nextProcessor);
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getDefault()
+    {
+        if ($this->type) {
+            return $this->type;
+        }
+
+        return parent::getDefault();
     }
 }
