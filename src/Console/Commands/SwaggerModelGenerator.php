@@ -133,7 +133,7 @@ class SwaggerModelGenerator extends Command
         return sprintf(
             '%s\\%s',
             $root,
-            implode('\\', $sources)
+            implode('\\', array_filter($sources))
         );
     }
 }

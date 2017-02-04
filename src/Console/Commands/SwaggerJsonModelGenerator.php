@@ -64,7 +64,7 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
 
         foreach ($processor->getProperties() as $property) {
             if ($property->getValue() instanceof JsonModelProcessor) {
-                $this->comment('Writing sub field');
+                $this->comment('Writing sub class');
                 $fileSystem->dumpFile(
                     $this->argument('src').DIRECTORY_SEPARATOR.$property->getValue()->getModelClass().'.php',
                     $codeGenerator->generate($model)
