@@ -94,6 +94,14 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
     }
 
     /**
+     * @param string $modelClass
+     */
+    public function setModelClass(string $modelClass)
+    {
+        $this->modelClass = $modelClass;
+    }
+
+    /**
      * @return string
      */
     public function getDescription(): string
@@ -152,7 +160,21 @@ class JsonModelProcessor extends AbstractProcessor implements ModelProcessorInte
      */
     protected function getDefaultOptions(): array
     {
-        return [];
+        $options = [];
+        if ($option = $this->getDefault()) {
+            $options[] = $option;
+        }
+
+        return $options;
+    }
+
+    public function getDefault()
+    {
+        if ($this->modelClass) {
+            return $this->modelClass;
+        }
+
+        return parent::getDefault();
     }
 
     /**

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "66c39515638f4a87e4f1b64437c79973",
-    "content-hash": "d48229fa29400158c43e5cafe1bd6965",
+    "hash": "e998b1e8197f2537221169221512a689",
+    "content-hash": "2cf2441f17829df317e167f20e7f4ef8",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -19,7 +19,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
                 "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
-                "shasum": "55ced3b32e0d610a1abe45f37ba541aeb0e687cc"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
@@ -177,7 +177,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/illuminate/console/zipball/c6d838c6f9ac3f1aec28cde93bf613283153785e",
                 "reference": "c6d838c6f9ac3f1aec28cde93bf613283153785e",
-                "shasum": "9265067b55c6fdc633708fd8ae6e6b9359ce5aa9"
+                "shasum": ""
             },
             "require": {
                 "illuminate/contracts": "5.2.*",
@@ -228,7 +228,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/illuminate/contracts/zipball/22bde7b048a33c702d9737fc1446234fff9b1363",
                 "reference": "22bde7b048a33c702d9737fc1446234fff9b1363",
-                "shasum": "61bafd2f7438a0e761d3eed80e30cd5fadd3f571"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
@@ -270,7 +270,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/illuminate/support/zipball/510230ab62a7d85dc70203f4fdca6fb71a19e08a",
                 "reference": "510230ab62a7d85dc70203f4fdca6fb71a19e08a",
-                "shasum": "79ce5a474c8a402bcac55101ae7a3070b586ad19"
+                "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "~1.0",
@@ -329,7 +329,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
                 "reference": "7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
-                "shasum": "8607f178e032ee595f16c36350351786425e808d"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
@@ -433,7 +433,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
                 "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
-                "shasum": "12185a9941ac9a80946cd9d3c2e8f81f99df56ad"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
@@ -638,7 +638,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/console/zipball/926061e74229e935d3c5b4e9ba87237316c6693f",
                 "reference": "926061e74229e935d3c5b4e9ba87237316c6693f",
-                "shasum": "93e0df63a55e33d05c25494193e5b7d13fa5bb15"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9",
@@ -688,17 +688,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.1.6",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "0565b61bf098cb4dc09f4f103f033138ae4f42c6"
+                "reference": "a0c6ef2dc78d33b58d91d3a49f49797a184d06f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/0565b61bf098cb4dc09f4f103f033138ae4f42c6",
-                "reference": "0565b61bf098cb4dc09f4f103f033138ae4f42c6",
-                "shasum": "4ffb852c05c5d4720a0539fb0f1d1d15d198f169"
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a0c6ef2dc78d33b58d91d3a49f49797a184d06f4",
+                "reference": "a0c6ef2dc78d33b58d91d3a49f49797a184d06f4",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
@@ -706,7 +706,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -733,7 +733,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-18 04:30:12"
+            "time": "2017-01-08 20:47:33"
         },
         {
             "name": "symfony/finder",
@@ -747,7 +747,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/finder/zipball/3eb4e64c6145ef8b92adefb618a74ebdde9e3fe9",
                 "reference": "3eb4e64c6145ef8b92adefb618a74ebdde9e3fe9",
-                "shasum": "ce2e0eadba645fc0c4bf5a46b3a7d5c4b1a7b1bf"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
@@ -786,7 +786,7 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -850,7 +850,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
                 "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "shasum": "c9ee1b0df025ad074aacd07b61f58658b76185fa"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -899,17 +899,17 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "6520f3d4cce604d9dd1e86cac7af954984dd9bda"
+                "reference": "ca032cc56976d88b85e7386b17020bc6dc95dbc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/6520f3d4cce604d9dd1e86cac7af954984dd9bda",
-                "reference": "6520f3d4cce604d9dd1e86cac7af954984dd9bda",
-                "shasum": "136947ec81d16e8ddd420b9f1a4b2102eed594fa"
+                "url": "https://api.github.com/repos/symfony/translation/zipball/ca032cc56976d88b85e7386b17020bc6dc95dbc5",
+                "reference": "ca032cc56976d88b85e7386b17020bc6dc95dbc5",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9",
@@ -959,7 +959,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:32:22"
+            "time": "2017-01-21 17:06:35"
         }
     ],
     "packages-dev": [
@@ -973,9 +973,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/doctrine-instantiator-8e884e78f9f0eb1329e445619e04456e64d8051d-zip-681b88.zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
                 "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "shasum": "81ef80fec0eec8f77ffda1c1d714274c71df7082"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3,<8.0-DEV"
@@ -1019,17 +1019,17 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/myclabs-deep-copy-399c1f9781e222f6eb6cc238796f5200d1b7f108-zip-7c48b9.zip",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
-                "shasum": "368c73e1e1e4e0b2915f3891ee0ae4b8af8a258d"
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
@@ -1057,7 +1057,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31 17:19:45"
+            "time": "2017-01-26 22:05:40"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1069,9 +1069,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpdocumentor-reflection-common-144c307535e82c8fdcaacbcfc1d6d8eeb896687c-zip-c3be2d.zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
                 "reference": "144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
-                "shasum": "8757432effca9d6d0a43d45af86f40ced5157e6e"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5"
@@ -1123,9 +1123,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpdocumentor-reflection-docblock-8331b5efe816ae05461b7ca1e721c01b46bafb3e-zip-319752.zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
                 "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
-                "shasum": "1955b765c3198ea5c9214299358aee7e919fe0bf"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
@@ -1168,9 +1168,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpdocumentor-type-resolver-e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb-zip-e5468a.zip",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
                 "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
-                "shasum": "3cb2c5038b497d26b2ff4ba70a09a1c9bae38d6e"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
@@ -1215,9 +1215,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpspec-prophecy-6c52c2722f8460122f96f86346600e1077ce22cb-zip-573078.zip",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/6c52c2722f8460122f96f86346600e1077ce22cb",
                 "reference": "6c52c2722f8460122f96f86346600e1077ce22cb",
-                "shasum": "93556482493add9108df8f7e252dc5394f98f722"
+                "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -1270,17 +1270,17 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
+                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-php-code-coverage-c14196e64a78570034afd0b7a9f3757ba71c2a0a-zip-36cc45.zip",
-                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
-                "shasum": "b9e4b57047e59849eacf689f1a3d41324b70558b"
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
+                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
+                "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -1329,7 +1329,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-20 15:22:42"
+            "time": "2017-01-20 15:06:43"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1341,9 +1341,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-php-file-iterator-3cc8f69b3028d0f96a9078e6295d86e9bf019be5-zip-184bc9.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
                 "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "shasum": "878689b8780944ffd0d565f2213c54a6cec8815f"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1388,9 +1388,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-php-text-template-31f8b717e51d9a2afca6c9f046f5d69fc27c8686-zip-c6bcbd.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
                 "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-                "shasum": "bfea43c04cfe86b92bb675798295a759f4c59e91"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1429,9 +1429,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-php-timer-38e9124049cf1a164f1e4537caf19c99bf1eb260-zip-cb2ac7.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/38e9124049cf1a164f1e4537caf19c99bf1eb260",
                 "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "shasum": "11d7a63ce1a2470a8eeead6a7d4e3a52d1f644c4"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1473,9 +1473,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-php-token-stream-3b402f65a4cc90abf6e1104e388b896ce209631b-zip-6915ed.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3b402f65a4cc90abf6e1104e388b896ce209631b",
                 "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
-                "shasum": "b44c4f8c9b43fe124e975d7973d514dbf57f868f"
+                "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
@@ -1514,17 +1514,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.5",
+            "version": "5.7.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe"
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-phpunit-50fd2be8f3e23e91da825f36f08e5f9633076ffe-zip-7a9a78.zip",
-                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe",
-                "shasum": "331680371a7de5d0d463ccccabd3653899ae5bf3"
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
@@ -1535,16 +1535,16 @@
                 "myclabs/deep-copy": "~1.3",
                 "php": "^5.6 || ^7.0",
                 "phpspec/prophecy": "^1.6.2",
-                "phpunit/php-code-coverage": "^4.0.3",
+                "phpunit/php-code-coverage": "^4.0.4",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "^1.0.6",
                 "phpunit/phpunit-mock-objects": "^3.2",
-                "sebastian/comparator": "~1.2.2",
+                "sebastian/comparator": "^1.2.4",
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "^1.0 || ^2.0",
+                "sebastian/global-state": "^1.1",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -1592,7 +1592,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-28 07:18:51"
+            "time": "2017-02-05 15:31:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1604,9 +1604,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/phpunit-phpunit-mock-objects-3ab72b65b39b491e0c011e2e09bb2206c2aa8e24-zip-3b7026.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/3ab72b65b39b491e0c011e2e09bb2206c2aa8e24",
                 "reference": "3ab72b65b39b491e0c011e2e09bb2206c2aa8e24",
-                "shasum": "d41ee3ccd3430a61e4c884e419335ba3562d059c"
+                "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -1663,9 +1663,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-code-unit-reverse-lookup-c36f5e7cfce482fde5bf8d10d41a53591e0198fe-zip-91f3fd.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
                 "reference": "c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
-                "shasum": "18064de476a8bb2053168358c85e91c15c94483e"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6"
@@ -1700,17 +1700,17 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.2",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f"
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-comparator-6a1ed12e8b2409076ab22e3897126211ff8b1f7f-zip-60a9ca.zip",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
-                "shasum": "1b9c33c8b24ca27f6e9885533574795ddf86798a"
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1760,7 +1760,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19 09:18:40"
+            "time": "2017-01-29 09:50:25"
         },
         {
             "name": "sebastian/diff",
@@ -1772,9 +1772,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-diff-13edfd8706462032c2f52b4b862974dd46b71c9e-zip-13c115.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
                 "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
-                "shasum": "4b1f73039b8a826e3f04c3e148a84f880a40a0c5"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1824,9 +1824,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-environment-5795ffe5dc5b02460c3e34222fee8cbe245d8fac-zip-f320b8.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/5795ffe5dc5b02460c3e34222fee8cbe245d8fac",
                 "reference": "5795ffe5dc5b02460c3e34222fee8cbe245d8fac",
-                "shasum": "40b546a97c26789222341286eef5c25ce0535df3"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0"
@@ -1874,9 +1874,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-exporter-ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4-zip-72608d.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4",
                 "reference": "ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4",
-                "shasum": "f2d6eb1f2ee7de9511a2ec1172987b423608298f"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1941,9 +1941,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-global-state-bc37d50fea7d017d3d340f230811c9f1d7280af4-zip-c4abec.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/bc37d50fea7d017d3d340f230811c9f1d7280af4",
                 "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4",
-                "shasum": "cf55d3bf4879aa89a4b5fbcdea28e9322b332cb6"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1992,9 +1992,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-object-enumerator-96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35-zip-43f40f.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
                 "reference": "96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
-                "shasum": "419916e1c74236a52a03512ca2bd478d419e2505"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
@@ -2038,9 +2038,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-recursion-context-2c3ba150cbec723aa057506e73a8d33bdb286c9a-zip-567089.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/2c3ba150cbec723aa057506e73a8d33bdb286c9a",
                 "reference": "2c3ba150cbec723aa057506e73a8d33bdb286c9a",
-                "shasum": "fe28927592b7ff88e0f41e4628e20266823b8947"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -2091,9 +2091,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-resource-operations-ce990bb21759f94aeafd30209e8cfcdfa8bc3f52-zip-4a3a08.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
                 "reference": "ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
-                "shasum": "9bf1c966d466e3fe7a6e5b1ce98a26dd9a314464"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
@@ -2133,9 +2133,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/sebastian-version-99732be0ddb3361e16ad77b68ba41efc8e979019-zip-0eee83.zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/99732be0ddb3361e16ad77b68ba41efc8e979019",
                 "reference": "99732be0ddb3361e16ad77b68ba41efc8e979019",
-                "shasum": "620ad5bd7fe6b5e9261d1756a9cba16eaa6e2203"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6"
@@ -2168,17 +2168,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d"
+                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/symfony-yaml-50eadbd7926e31842893c957eca362b21592a97d-zip-6c80f3.zip",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d",
-                "shasum": "04774bbbc1bb6057501f1712e01f932465ee01b2"
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e1718c6bf57e1efbb8793ada951584b2ab27775b",
+                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
@@ -2219,7 +2219,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-03 13:51:32"
+            "time": "2017-01-21 17:06:35"
         },
         {
             "name": "webmozart/assert",
@@ -2231,9 +2231,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.lzd.co/dist/webmozart-assert-2db61e59ff05fe5126d152bd0655c9ea113e550f-zip-36e9ad.zip",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/2db61e59ff05fe5126d152bd0655c9ea113e550f",
                 "reference": "2db61e59ff05fe5126d152bd0655c9ea113e550f",
-                "shasum": "0e6487a1f0294a91a9d96eeeb0996b57915cadbe"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.3.3 || ^7.0"

@@ -34,8 +34,8 @@ class ProcessorResult implements ResultInterface
     /**
      * ValidationRule constructor.
      *
-     * @param string      $input
-     * @param null|string $value
+     * @param string                      $input
+     * @param null|string|ProcessorResult $value
      */
     public function __construct($input, $value = null)
     {

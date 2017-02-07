@@ -72,8 +72,8 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
                 ],
                 [
                     sprintf('Provide your class name for field(%s)', $key),
-                    [],
-                    false,
+                    [$class],
+                    $class,
                 ],
                 ['Rename field(orderNumber) or Press Enter to ignore', ['orderNumber'], 'orderNumber'],
                 [
@@ -95,13 +95,8 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
          * @var $model JsonModelProcessor
          */
         $model = $result->getValue();
-        static::assertInstanceOf(JsonModelProcessor::class, $model);
-        static::assertEquals('ItemList', $model->getModelClass(), 'Class must be updated through command');
-        static::assertEquals(
-            'order_number',
-            (end($model->getProperties()))->getInput(),
-            'Property must be order_number'
-        );
+        static::assertInstanceOf(JsonModelProcessor::class, $model->getValue());
+        static::assertEquals($class, $model->getValue()->getModelClass(), 'Class must be updated through command');
     }
 
     public function getPrimitiveDataProvider()
@@ -140,8 +135,13 @@ class JsonPropertyTest extends \PHPUnit_Framework_TestCase
         return [
             '#1' => [
                 'key'   => 'itemList',
-                'class' => 'ItemList',
-                'value' => [['orderNumber' => 'something']],
+                'class' => 'ItemClass',
+                'value' => [
+                    'itemList' =>
+                        [
+                            'ItemClass' => ['orderNumber' => 'something'],
+                        ],
+                ],
             ],
         ];
     }

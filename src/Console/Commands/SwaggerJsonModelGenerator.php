@@ -63,11 +63,33 @@ class SwaggerJsonModelGenerator extends SwaggerModelGenerator
         );
 
         foreach ($processor->getProperties() as $property) {
-            if ($property->getValue() instanceof JsonModelProcessor) {
+            /**
+             * @var $processorResult JsonModelProcessor
+             */
+            $processorResult = $property->getValue();
+            if ($processorResult instanceof JsonModelProcessor) {
+                $processorResult->setNamespace($rootNamespace);
                 $this->comment('Writing sub class');
+                $model = new PhpClass();
+                $parser->parse($processorResult, $model);
                 $fileSystem->dumpFile(
-                    $this->argument('src').DIRECTORY_SEPARATOR.$property->getValue()->getModelClass().'.php',
+                    $this->argument('src').DIRECTORY_SEPARATOR.$processorResult->getModelClass().'.php',
                     $codeGenerator->generate($model)
+                );
+            }
+            /**
+             * @var $arrayItemClass JsonModelProcessor
+             */
+            $arrayItemClass = $property->getValue()->getValue();
+            if ($arrayItemClass && $arrayItemClass instanceof JsonModelProcessor) {
+                $this->comment('Writing sub class');
+                $model = new PhpClass();
+                $parser->parse($arrayItemClass, $model);
+                $fileSystem->dumpFile(
+                    $this->argument('src').
+                    DIRECTORY_SEPARATOR.
+                    $property->getValue()->getValue()->getModelClass().'.php',
+                    $codeGenerator->generate($arrayItemClass)
                 );
             }
         }

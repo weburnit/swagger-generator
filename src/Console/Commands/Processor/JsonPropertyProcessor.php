@@ -22,7 +22,15 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     private $value;
 
+    /**
+     * @var ValidationFactory
+     */
     private $factory;
+
+    /**
+     * @var string
+     */
+    private $type;
 
     /**
      * JsonPropertyProcessor constructor.
@@ -35,6 +43,7 @@ class JsonPropertyProcessor extends AbstractProcessor
         $this->property = $property;
         $this->value    = $value;
         $this->factory  = new ValidationFactory();
+        $this->type     = $this->detectDataType($this->value);
     }
 
     /**
@@ -42,20 +51,26 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     public function request(Command $command)
     {
-        $processor = $this->process($command);
+        $result = $this->process($command);
 
-        if ($processor) {
+        if ($result) {
+            if (ValidationFactory::TYPE_ARRAY === $this->type) {
+                $result = new ProcessorResult(
+                    $this->property,
+                    new ProcessorResult(ValidationFactory::TYPE_ARRAY, $result->getValue())
+                );
+            }
             $description = $command->ask(
                 sprintf('%s description', 'Property'),
                 ''
             );
-            $processor->setDescription($description);
+            $result->setDescription($description);
 
             $required = $command->askWithCompletion('Is required?(Y/N) Default (N)', ['Y', 'N'], 'N');
-            $processor->setRequired(strtoupper($required) === 'Y');
+            $result->setRequired(strtoupper($required) === 'Y');
         }
 
-        return $processor;
+        return $result;
     }
 
     /**
@@ -63,20 +78,25 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     public function getNextProcessor()
     {
-        $type = $this->detectDataType($this->value);
-
-        if (ValidationFactory::TYPE_ARRAY === $type) {
-            return new JsonModelProcessor(
-                end($this->value),
+        if (ValidationFactory::TYPE_ARRAY === $this->type && is_array($this->value)) {
+            $schema     = end($this->value);
+            $keys       = array_keys($schema);
+            $class      = end($keys);
+            $jsonObject = end($schema);
+            $model      = new JsonModelProcessor(
+                $jsonObject,
                 sprintf('Provide your class name for field(%s)', $this->property)
             );
+            $model->setModelClass($class);
+
+            return $model;
         }
 
-        if ($validation = $this->factory->createValidation($type)) {
-            return $validation;
+        if (ValidationFactory::TYPE_CLASS === $this->type) {
+            return new JsonModelProcessor($this->value, sprintf('Provide your class name for(%s)', $this->property));
         }
 
-        return new TypeProcessor($type);
+        return new TypeProcessor($this->type);
     }
 
     /**
@@ -124,11 +144,16 @@ class JsonPropertyProcessor extends AbstractProcessor
      */
     private function detectDataType($value)
     {
+        if (is_array($value)) {
+            $keys = count(array_keys($value));
+            if (1 === $keys) {
+                return ValidationFactory::TYPE_ARRAY;
+            }
+
+            return ValidationFactory::TYPE_CLASS;
+        }
         if (is_bool($value)) {
             return ValidationFactory::TYPE_BOOLEAN;
-        }
-        if (is_array($value)) {
-            return ValidationFactory::TYPE_ARRAY;
         }
         if (is_numeric($value)) {
             if ((int) $value == $value) {
@@ -140,15 +165,6 @@ class JsonPropertyProcessor extends AbstractProcessor
 
         if ((bool) strtotime($value)) {
             return ValidationFactory::TYPE_DATE;
-        }
-
-        if (is_array($value)) {
-            $keys = array_keys($value);
-            if (!is_numeric(current($keys))) {
-                return ValidationFactory::TYPE_ARRAY;
-            }
-
-            return ValidationFactory::TYPE_CLASS;
         }
 
         if (!filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
