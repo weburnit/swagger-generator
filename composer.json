@@ -13,7 +13,7 @@
     "php": "~7.0",
     "illuminate/console": "^5.4",
     "symfony/finder": "v3.2.2",
-    "symfony/filesystem": "v3.1.6",
+    "symfony/filesystem": "v3.2.2",
     "gossi/php-code-generator": "^0.4.1"
   },
   "require-dev": {
