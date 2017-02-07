@@ -8,6 +8,7 @@ use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 /**
  * Class TypeProcessor
+ *
  * @package Weburnit\Console\Commands\Processor
  */
 class TypeProcessor extends AbstractProcessor
@@ -64,11 +65,7 @@ class TypeProcessor extends AbstractProcessor
      */
     protected function getQuestion(): string
     {
-        if ($this->type) {
-            return sprintf('provide type for this property: number, string, etc. Current is "%s"', $this->type);
-        }
-
-        return 'provide type for this property: number, string, etc. Default is string.';
+        return sprintf('provide type for this property: number, string, etc. Current is "%s"', $this->type);
     }
 
     /**
@@ -97,10 +94,6 @@ class TypeProcessor extends AbstractProcessor
      */
     public function getDefault()
     {
-        if ($this->type) {
-            return $this->type;
-        }
-
-        return parent::getDefault();
+        return $this->type;
     }
 }

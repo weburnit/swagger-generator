@@ -42,10 +42,16 @@ class JsonModelProcessorTest extends \PHPUnit_Framework_TestCase
 
         $json = '{"platformName":"LAZADA_MY"}';
 
-
         $processor = new JsonModelProcessor(json_decode($json, true));
 
         $processor->request($this->command);
+        static::assertEquals('JsonClass', $processor->getModelClass());
+        static::assertEquals('JsonClass', $processor->getInput());
+        static::assertEquals($processor, $processor->getValue());
+        static::assertTrue($processor->isRequired());
+        $processor->setNamespace('ProjectNamespace');
+        static::assertEquals('ProjectNamespace', $processor->getNamespace());
+        static::assertEquals('Description', $processor->getDescription());
         static::assertEquals(1, count($processor->getProperties()), 'Must have 1 property');
 
         /**
