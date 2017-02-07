@@ -51,7 +51,7 @@ class JsonModelProcessorTest extends \PHPUnit_Framework_TestCase
         /**
          * @var $property ProcessorResult
          */
-        $property = end($processor->getProperties());
+        $property = $processor->getProperties()[0];
         static::assertInstanceOf(
             ProcessorResult::class,
             $property,

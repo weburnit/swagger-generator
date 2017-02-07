@@ -23,4 +23,13 @@
         <log type="coverage-php" target="./build/coverage/coverage.serialized"/>
     </logging>
     <!-- /COVERAGE -->
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./tests</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
