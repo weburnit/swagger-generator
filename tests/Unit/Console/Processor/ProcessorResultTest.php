@@ -18,7 +18,7 @@ class ProcessorResultTest extends \PHPUnit_Framework_TestCase
         $result->setDescription('platform code');
         $result->setRequired(true);
         static::assertEquals(
-            'exists:product,platformCode|string|required',
+            'bail|required|exists:product,platformCode|string',
             (string) $result,
             'Must reflect correct validation'
         );
@@ -35,6 +35,6 @@ class ProcessorResultTest extends \PHPUnit_Framework_TestCase
         $result->setRequired(true);
         $result->setDescription('Order price');
 
-        static::assertEquals('numeric|required', (string) $result);
+        static::assertEquals('bail|required|numeric', (string) $result);
     }
 }

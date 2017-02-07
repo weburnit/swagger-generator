@@ -7,6 +7,7 @@ use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 
 /**
  * Class ValidationRule
+ *
  * @package Weburnit\Console\Commands\Processor
  */
 class ProcessorResult implements ResultInterface
@@ -108,9 +109,9 @@ class ProcessorResult implements ResultInterface
         }
 
         if ($this->required) {
-            $value = sprintf('%s|%s', $value, 'required');
+            $value = sprintf('%s|%s', 'required', $value);
         }
 
-        return $value;
+        return sprintf('bail|%s', $value);
     }
 }

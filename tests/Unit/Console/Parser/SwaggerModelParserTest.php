@@ -43,7 +43,7 @@ class Product {
 	/**
 	 * @var array
 	 */
-	public static $validation = [\'orderNumber\'=>\'string|required\',\'platformCode\'=>\'exists:product,platformCode|string|required\',];
+	public static $validation = [\'orderNumber\'=>\'bail|required|string\',\'platformCode\'=>\'bail|required|exists:product,platformCode|string\',];
 
 	/**
 	 * Order Number

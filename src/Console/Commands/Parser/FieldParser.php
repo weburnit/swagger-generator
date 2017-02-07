@@ -73,8 +73,6 @@ class FieldParser implements ParserInterface
 
         if (!$dataType) {
             $dataType = $field->getValue()->getValue()->getValue()->getInput();
-
-            return $dataType;
         }
 
         $property->getDocblock()->appendTag($swagger);
