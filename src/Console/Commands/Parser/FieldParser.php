@@ -13,6 +13,7 @@ use Weburnit\PhpDocumentor\Tags\SwaggerTag;
 
 /**
  * Class FieldParser
+ *
  * @package Weburnit\Console\Commands\Parser
  */
 class FieldParser implements ParserInterface
@@ -24,14 +25,12 @@ class FieldParser implements ParserInterface
     {
         $properties = [];
         foreach ($processor->getProperties() as $field) {
-
-            $dataType = $this->detectDataType($field);
             $property = PhpProperty::create($field->getInput())
                 ->setVisibility('protected')
                 ->setDescription($field->getDescription());
-            $property->getDocblock()->appendTag(
-                new SwaggerTag(sprintf('SWG\Property(description="%s")', $field->getDescription()))
-            );
+
+            $dataType = $this->detectDataType($field, $property);
+
             $property->setType($field->isRequired() ? $dataType : sprintf('%s|null', $dataType));
 
             $properties[] = $property;
@@ -40,16 +39,36 @@ class FieldParser implements ParserInterface
         $class->setProperties($properties);
     }
 
-    private function detectDataType(ResultInterface $field)
+    private function detectDataType(ResultInterface $field, PhpProperty $property)
     {
+        $swagger = new SwaggerTag(sprintf('SWG\Property(description="%s")', $field->getDescription()));
         if (ValidationFactory::TYPE_ARRAY === $field->getValue()->getInput()) {
-            return $field->getValue()->getValue()->getInput();
+            $swagger = new SwaggerTag(
+                sprintf(
+                    'SWG\Property(description="%s"), type="array", @SWG\Items(ref="#/definitions/%s")',
+                    $field->getDescription(),
+                    $field->getValue()->getValue()->getModelClass()
+                )
+            );
+            $property->getDocblock()->appendTag($swagger);
+
+            return ValidationFactory::TYPE_ARRAY;
         }
         if (ValidationFactory::TYPE_CLASS === $field->getValue()->getInput() &&
             $field->getValue()->getValue() instanceof JsonModelProcessor
         ) {
+            $swagger = new SwaggerTag(
+                sprintf(
+                    'SWG\Property(description="%s"), ref="#/definitions/%s")',
+                    $field->getDescription(),
+                    $field->getValue()->getValue()->getModelClass()
+                )
+            );
+            $property->getDocblock()->appendTag($swagger);
+
             return $field->getValue()->getValue()->getModelClass();
         }
+
         $dataType = ValidationFactory::getDataType($field->getValue()->getInput());
 
         if (!$dataType) {
@@ -57,6 +76,8 @@ class FieldParser implements ParserInterface
 
             return $dataType;
         }
+
+        $property->getDocblock()->appendTag($swagger);
 
         return $dataType;
     }
