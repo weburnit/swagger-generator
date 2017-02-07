@@ -165,7 +165,6 @@ class ValidationFactory
             static::EXTENDED_TYPE_REGEX,
             static::EXTENDED_TYPE_DATE_FORMAT,
             static::TYPE_DATE,
-            static::TYPE_ARRAY,
             static::TYPE_TIMEZONE,
             static::TYPE_DISTINCT,
             static::TYPE_FILLED,
@@ -180,6 +179,9 @@ class ValidationFactory
 
         if (in_array($validation, [static::TYPE_CLASS, static::TYPE_JSON])) {
             return static::TYPE_JSON;
+        }
+        if (static::TYPE_ARRAY === $validation) {
+            return $validation;
         }
 
         return null;

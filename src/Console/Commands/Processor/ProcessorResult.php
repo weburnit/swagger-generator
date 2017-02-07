@@ -96,8 +96,10 @@ class ProcessorResult implements ResultInterface
      */
     public function __toString()
     {
-        $value = $this->getValue()->getInput();
+        $value = '';
         if ($this->value) {
+            $value    = $this->getValue()->getInput() === 'class' ?
+                ValidationFactory::TYPE_ARRAY : $this->getValue()->getInput();
             $dataType = ValidationFactory::getDataType($this->getValue()->getInput());
             if (!$dataType) {
                 $value = sprintf('%s:%s', $this->value->getInput(), (string) $this->value->getValue()->getInput());

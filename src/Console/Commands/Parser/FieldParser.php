@@ -5,7 +5,9 @@ namespace Weburnit\Console\Commands\Parser;
 
 use gossi\codegen\model\PhpClass;
 use gossi\codegen\model\PhpProperty;
+use Weburnit\Console\Commands\Processor\JsonModelProcessor;
 use Weburnit\Console\Commands\Processor\ModelProcessorInterface;
+use Weburnit\Console\Commands\Processor\ResultInterface;
 use Weburnit\Console\Commands\Processor\Validations\ValidationFactory;
 use Weburnit\PhpDocumentor\Tags\SwaggerTag;
 
@@ -23,13 +25,7 @@ class FieldParser implements ParserInterface
         $properties = [];
         foreach ($processor->getProperties() as $field) {
 
-            $dataType = ValidationFactory::getDataType($field->getValue()->getInput());
-            if (ValidationFactory::TYPE_CLASS === $field->getValue()->getInput()) {
-                $dataType = $field->getValue()->getValue()->getInput();
-            }
-            if (!$dataType) {
-                $dataType = $field->getValue()->getValue()->getValue()->getInput();
-            }
+            $dataType = $this->detectDataType($field);
             $property = PhpProperty::create($field->getInput())
                 ->setVisibility('protected')
                 ->setDescription($field->getDescription());
@@ -42,5 +38,26 @@ class FieldParser implements ParserInterface
         }
 
         $class->setProperties($properties);
+    }
+
+    private function detectDataType(ResultInterface $field)
+    {
+        if (ValidationFactory::TYPE_ARRAY === $field->getValue()->getInput()) {
+            return $field->getValue()->getValue()->getInput();
+        }
+        if (ValidationFactory::TYPE_CLASS === $field->getValue()->getInput() &&
+            $field->getValue()->getValue() instanceof JsonModelProcessor
+        ) {
+            return $field->getValue()->getValue()->getModelClass();
+        }
+        $dataType = ValidationFactory::getDataType($field->getValue()->getInput());
+
+        if (!$dataType) {
+            $dataType = $field->getValue()->getValue()->getValue()->getInput();
+
+            return $dataType;
+        }
+
+        return $dataType;
     }
 }

@@ -57,7 +57,7 @@ class JsonPropertyProcessor extends AbstractProcessor
             if (in_array($this->type, [ValidationFactory::TYPE_ARRAY, ValidationFactory::TYPE_CLASS])) {
                 $result = new ProcessorResult(
                     $this->property,
-                    new ProcessorResult(ValidationFactory::TYPE_ARRAY, $result->getValue())
+                    new ProcessorResult($this->type, $result->getValue())
                 );
             }
             $description = $command->ask(
