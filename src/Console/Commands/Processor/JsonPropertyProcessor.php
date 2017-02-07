@@ -54,7 +54,7 @@ class JsonPropertyProcessor extends AbstractProcessor
         $result = $this->process($command);
 
         if ($result) {
-            if (ValidationFactory::TYPE_ARRAY === $this->type) {
+            if (in_array($this->type, [ValidationFactory::TYPE_ARRAY, ValidationFactory::TYPE_CLASS])) {
                 $result = new ProcessorResult(
                     $this->property,
                     new ProcessorResult(ValidationFactory::TYPE_ARRAY, $result->getValue())
@@ -62,7 +62,7 @@ class JsonPropertyProcessor extends AbstractProcessor
             }
             $description = $command->ask(
                 sprintf('%s description', 'Property'),
-                ''
+                $this->property
             );
             $result->setDescription($description);
 
@@ -83,17 +83,24 @@ class JsonPropertyProcessor extends AbstractProcessor
             $keys       = array_keys($schema);
             $class      = end($keys);
             $jsonObject = end($schema);
-            $model      = new JsonModelProcessor(
+            $processor  = new JsonModelProcessor(
                 $jsonObject,
                 sprintf('Provide your class name for field(%s)', $this->property)
             );
-            $model->setModelClass($class);
+            $processor->setModelClass($class);
 
-            return $model;
+            return $processor;
         }
 
         if (ValidationFactory::TYPE_CLASS === $this->type) {
-            return new JsonModelProcessor($this->value, sprintf('Provide your class name for(%s)', $this->property));
+            $processor = new JsonModelProcessor(
+                $this->value,
+                sprintf('Provide your class name for(%s)', $this->property)
+            );
+
+            $processor->setModelClass(ucfirst($this->property));
+
+            return $processor;
         }
 
         return new TypeProcessor($this->type);
