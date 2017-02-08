@@ -41,7 +41,6 @@ class FieldParser implements ParserInterface
 
     private function detectDataType(ResultInterface $field, PhpProperty $property)
     {
-        $swagger = new SwaggerTag(sprintf('SWG\Property(description="%s")', $field->getDescription()));
         if (ValidationFactory::TYPE_ARRAY === $field->getValue()->getInput()) {
             $swagger = new SwaggerTag(
                 sprintf(
@@ -74,6 +73,9 @@ class FieldParser implements ParserInterface
         if (!$dataType) {
             $dataType = $field->getValue()->getValue()->getValue()->getInput();
         }
+        $swagger = new SwaggerTag(
+            sprintf('SWG\Property(description="%s", type="%s")', $field->getDescription(), $dataType)
+        );
 
         $property->getDocblock()->appendTag($swagger);
 

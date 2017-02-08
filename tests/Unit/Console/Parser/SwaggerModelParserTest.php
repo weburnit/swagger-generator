@@ -7,6 +7,7 @@ use Weburnit\Console\Commands\Parser\SwaggerClassParser;
 
 /**
  * Class SwaggerModelParserTest
+ *
  * @package Tests\Weburnit\Unit\Console\Parser
  */
 class SwaggerModelParserTest extends AbstractParser
@@ -48,7 +49,7 @@ class Product {
 	/**
 	 * Order Number
 	 * 
-	 * @SWG\Property(description="Order Number")
+	 * @SWG\Property(description="Order Number", type="string")
 	 * @var string
 	 */
 	protected $orderNumber;
@@ -56,7 +57,7 @@ class Product {
 	/**
 	 * platform code
 	 * 
-	 * @SWG\Property(description="platform code")
+	 * @SWG\Property(description="platform code", type="string")
 	 * @var string
 	 */
 	protected $platformCode;
