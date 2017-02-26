@@ -11,7 +11,7 @@
   "type": "project",
   "require": {
     "php": "~7.0",
-    "illuminate/console": "v5.2.45",
+    "illuminate/console": "^5.*",
     "symfony/finder": "^2.7",
     "symfony/filesystem": "v3.2.2",
     "gossi/php-code-generator": "^0.4.1"
