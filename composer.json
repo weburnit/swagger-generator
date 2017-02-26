@@ -12,7 +12,7 @@
   "require": {
     "php": "~7.0",
     "illuminate/console": "^5.1",
-    "symfony/finder": "^2.7",
+    "symfony/finder": "~2|~3",
     "symfony/filesystem": "v3.2.2",
     "gossi/php-code-generator": "^0.4.1"
   },
