@@ -5,6 +5,7 @@ namespace Weburnit\Console\Commands\Processor\Validations;
 
 /**
  * Class ValidationFactory
+ *
  * @package Weburnit\Console\Commands\Processor\Validations
  */
 class ValidationFactory
@@ -165,6 +166,7 @@ class ValidationFactory
             static::EXTENDED_TYPE_REGEX,
             static::EXTENDED_TYPE_DATE_FORMAT,
             static::TYPE_DATE,
+            static::TYPE_EMAIL,
             static::TYPE_TIMEZONE,
             static::TYPE_DISTINCT,
             static::TYPE_FILLED,
